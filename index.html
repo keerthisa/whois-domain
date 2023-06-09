@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Domain Expiry</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+
+<body>
+    <h1>Domain Expiry</h1>
+    <input type="text" id="domain" placeholder="Enter domain name">
+    <button onclick="getExpiry()">Get expiry</button>
+    <div id="expiry"></div>
+    <script>
+        function getExpiry() {
+            var domain = document.getElementById("domain").value;
+            var reqest = new XMLHttpRequest();
+            reqest.open("GET", "https://www.whoisxmlapi.com/whoisserver/WhoisService?apiKey=at_5Q9Vb5BmjjkqOUIHT9NmoQUF3FeZc&domainName=" + domain + "&output=json");
+            reqest.onload = function () {
+                if (reqest.status === 200) {
+                    var data = JSON.parse(reqest.responseText);
+                    var expiry = data.expirationDate;
+                    document.getElementById("expiry").innerHTML = expiry;
+                } else {
+                    document.getElementById("expiry").innerHTML = "Error: " + reqest.status;
+                }
+            };
+            reqest.send();
+        }
+    </script>
+</body>
+
+</html>
+
+<!-- at_5Q9Vb5BmjjkqOUIHT9NmoQUF3FeZc -->
